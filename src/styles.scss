@@ -1,1 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+    --text-color: white;
+    --background-color: #181625;
+    --primary-color: #8730cf;
+    --secondary-color:#4eb787;
+    --accent-color: #988281;
+  }
+body {
+    margin: 0;
+    background-color: var(--background-color);
+    font-family: 'Chakra Petch', sans-serif;
+}
