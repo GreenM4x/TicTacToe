@@ -1,0 +1,11 @@
+<div class="screen">
+  <div
+    class="screen-container"
+    [ngClass]="{
+    'screen-container-X': winningPlayer === 'X',
+    'screen-container-O': winningPlayer === 'O',
+  }"
+  >
+    <h1>Congrats {{ winningPlayer }} WON!</h1>
+  </div>
+</div>

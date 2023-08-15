@@ -1,0 +1,29 @@
+.tile {
+  height: 150px;
+  width: 150px;
+  background-color: var(--background-color);
+
+  font-size: 100px;
+  font-family: "Russo One", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &-X {
+    color: var(--secondary-color);
+  }
+  &-O {
+    color: var(--primary-color);
+  }
+
+  button {
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

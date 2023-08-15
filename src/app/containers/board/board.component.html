@@ -1,7 +1,8 @@
 <div class="board">
   <div class="board-container">
-    <div class="board-cell" *ngFor="let asd; for: [1, 2, 3, 4, 5, 6, 7, 8, 9]">
-      312313
+    <div class="row" *ngFor="let row of board; let x = index">
+      <app-tiles *ngFor="let column of row; let y = index" [coords]="{x, y}">
+      </app-tiles>
     </div>
   </div>
 </div>

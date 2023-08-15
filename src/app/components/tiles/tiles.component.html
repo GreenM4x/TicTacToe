@@ -1,0 +1,10 @@
+<div
+  class="tile"
+  [ngClass]="{
+    'tile-X': playerOneTurn,
+    'tile-O': !playerOneTurn
+  }"
+>
+  {{ content }}
+  <button *ngIf="!beenPressed" (click)="setTile()"></button>
+</div>

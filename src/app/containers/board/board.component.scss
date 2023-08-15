@@ -10,12 +10,16 @@
     width: 500px;
     background-color: var(--background-color-2);
     box-shadow: 0px 0px 45px -1px rgba(0, 0, 0, 0.75);
-    display: flex;
-  }
 
-  &-cell {
-    height: 20px;
-    width: 20px;
-    background-color: aliceblue;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .row {
+      display: flex;
+      gap: 10px;
+    }
   }
 }
