@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { GameService } from 'src/app/services/game.service';
 
 @Component({
@@ -7,12 +8,13 @@ import { GameService } from 'src/app/services/game.service';
   styleUrls: ['./startscreen.component.scss'],
 })
 export class StartscreenComponent {
-  private gs: GameService;
-  constructor(gs: GameService) {
-    this.gs = gs;
-  }
+  /* gameid: string; */
+
+  constructor(private gs: GameService, private router: Router) {}
 
   create() {
-    this.gs.startGame();
+    this.gs.startGame().subscribe((id) => {
+      this.router.navigate([id]);
+    });
   }
 }

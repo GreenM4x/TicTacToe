@@ -1,21 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject, map, pipe, retry } from 'rxjs';
 import { Game } from '../model/game.model';
 import { ApiServiceService } from './api-service.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameService {
-  gameId: string = 'y8z0As';
-  currentGame!: Game;
-
   emptyBoard: number[][] = [
     [0, 0, 0],
     [0, 0, 0],
     [0, 0, 0],
   ];
 
+  gameId!: string;
   newGame!: Game;
 
   gameMode: 'local' | 'computer' | 'online' = 'local'; //TODO Game Select Screen
@@ -23,42 +22,79 @@ export class GameService {
   boardArray: number[][] = new Array(3).fill(0).map(() => new Array(3).fill(0));
   currentTileCord: number[] = [0, 0];
 
-  content: string = '';
+  currentGame: Game = {
+    board: this.boardArray,
+    gameOver: false,
+  };
+
   playerOneTurn: boolean = true;
 
   winningPlayer: Subject<'X' | 'O'> = new Subject();
   gameStatus: Subject<boolean> = new Subject();
 
-  constructor(private apiService: ApiServiceService) {}
-  startGame() {
+  constructor(
+    private route: ActivatedRoute,
+    private apiService: ApiServiceService
+  ) {}
+  startGame(): Observable<string | undefined> {
     this.newGame = {
       board: this.emptyBoard,
       gameOver: false,
     };
-    this.apiService
-      .create(this.newGame)
-      .subscribe((newGame) => console.log('New game was created'));
+
+    this.gameStatus.next(false);
+    this.boardArray = new Array(3).fill(0).map(() => new Array(3).fill(0));
+
+    return this.apiService.create(this.newGame).pipe(map((game) => game.id));
   }
 
   play() {
-    if (this.playerOneTurn) {
-      this.boardArray[this.currentTileCord[0]][this.currentTileCord[1]] = 1;
-      this.content = 'X';
-    } else {
-      this.boardArray[this.currentTileCord[0]][this.currentTileCord[1]] = -1;
-      this.content = 'O';
-    }
-    this.playerOneTurn = !this.playerOneTurn;
+    this.apiService.readOne(this.gameId).subscribe((game) => {
+      this.currentGame = game || this.currentGame;
 
-    this.checkForWin();
+      this.updateBoard();
+
+      this.updateGame();
+
+      this.playerOneTurn = !this.playerOneTurn;
+
+      this.checkForWin();
+    });
   }
 
-  getCurrentContent() {
-    return this.content;
+  private updateGame() {
+    this.currentGame = {
+      board: this.boardArray,
+      gameOver: false,
+      id: this.gameId,
+    };
+
+    this.apiService
+      .update(this.currentGame)
+      .subscribe((game) => console.log(game));
+  }
+
+  private updateBoard() {
+    if (this.playerOneTurn) {
+      this.boardArray[this.currentTileCord[0]][this.currentTileCord[1]] = 1;
+    } else {
+      this.boardArray[this.currentTileCord[0]][this.currentTileCord[1]] = -1;
+    }
+  }
+
+  getCurrentBoard() {
+    return this.apiService
+      .readOne(this.gameId)
+      .pipe(map((game) => game?.board));
   }
   getCurrentPlayer() {
     return this.playerOneTurn;
   }
+
+  setGameID(gameID: string) {
+    this.gameId = gameID;
+  }
+
   setCurrentTile(cTileCord: number[]) {
     this.currentTileCord = cTileCord;
   }

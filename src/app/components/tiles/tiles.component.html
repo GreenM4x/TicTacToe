@@ -1,10 +1,10 @@
 <div
   class="tile"
   [ngClass]="{
-    'tile-X': playerOneTurn,
-    'tile-O': !playerOneTurn
+    'tile-X': content === 'X',
+    'tile-O': content === 'O'
   }"
 >
   {{ content }}
-  <button *ngIf="!beenPressed" (click)="setTile()"></button>
+  <button *ngIf="!content" (click)="setTile()"></button>
 </div>

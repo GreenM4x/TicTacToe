@@ -1,7 +1,7 @@
 export interface Game {
-  id?: String;
-  nameP1?: String;
-  nameP2?: String;
+  id?: string;
+  nameP1?: string;
+  nameP2?: string;
   board: number[][];
   gameOver: boolean;
   winner?: 'X' | 'O';
