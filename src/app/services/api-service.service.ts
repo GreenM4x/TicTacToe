@@ -29,20 +29,7 @@ export class ApiServiceService {
       map((games) => {
         const game = games.find((game: Game) => game.id === id);
 
-        if (game) {
-          return game;
-        }
-
-        return {
-          id: `${id}`,
-          nameP1: 'Blanc',
-          nameP2: 'Blanc2',
-          board: [
-            [0, 0, 0],
-            [0, 0, 0],
-            [0, 0, 0],
-          ],
-        };
+        return game;
       })
     );
   }

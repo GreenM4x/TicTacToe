@@ -1,10 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { Game } from '../model/game.model';
+import { ApiServiceService } from './api-service.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameService {
+  gameId: string = 'y8z0As';
+  currentGame!: Game;
+
+  emptyBoard: number[][] = [
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0],
+  ];
+
+  newGame!: Game;
+
   gameMode: 'local' | 'computer' | 'online' = 'local'; //TODO Game Select Screen
 
   boardArray: number[][] = new Array(3).fill(0).map(() => new Array(3).fill(0));
@@ -16,6 +29,17 @@ export class GameService {
   winningPlayer: Subject<'X' | 'O'> = new Subject();
   gameStatus: Subject<boolean> = new Subject();
 
+  constructor(private apiService: ApiServiceService) {}
+  startGame() {
+    this.newGame = {
+      board: this.emptyBoard,
+      gameOver: false,
+    };
+    this.apiService
+      .create(this.newGame)
+      .subscribe((newGame) => console.log('New game was created'));
+  }
+
   play() {
     if (this.playerOneTurn) {
       this.boardArray[this.currentTileCord[0]][this.currentTileCord[1]] = 1;
@@ -26,7 +50,7 @@ export class GameService {
     }
     this.playerOneTurn = !this.playerOneTurn;
 
-    this.checkforwin();
+    this.checkForWin();
   }
 
   getCurrentContent() {
@@ -39,7 +63,7 @@ export class GameService {
     this.currentTileCord = cTileCord;
   }
 
-  checkforwin() {
+  checkForWin() {
     //Check for Row or Column Win
     for (let x = 0; x < 3; x++) {
       let colsum = 0;
