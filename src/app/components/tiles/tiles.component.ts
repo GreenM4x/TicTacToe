@@ -12,6 +12,10 @@ export class TilesComponent implements OnInit {
   content: string = '';
 
   ngOnInit(): void {
+    this.gs.currentContent.subscribe((content) => {
+      this.content = content;
+    });
+
     if (this.gs.isBotGame) return;
     this.gs.getCurrentBoard().subscribe((board) => {
       this.currentboard = board;
@@ -38,7 +42,6 @@ export class TilesComponent implements OnInit {
   setTile() {
     this.gs.setCurrentTile([this.coords.x, this.coords.y]);
     this.gs.play();
-    this.content = this.gs.getCurrentContent();
 
     if (this.gs.isBotGame) return;
     this.gs.getCurrentBoard().subscribe((board) => (this.currentboard = board));

@@ -224,7 +224,7 @@
           1
         ],
         [
-          0,
+          1,
           1,
           0
         ],
@@ -236,7 +236,29 @@
       ],
       "gameOver": false,
       "id": "ao51S3o",
-      "currentPlayerOne": true
+      "currentPlayerOne": false
+    },
+    {
+      "board": [
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "gameOver": false,
+      "id": "OLVIPLv",
+      "currentPlayerOne": false
     }
   ]
 }

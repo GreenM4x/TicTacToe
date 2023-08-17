@@ -7,7 +7,7 @@ import { ApiServiceService } from './api-service.service';
   providedIn: 'root',
 })
 export class GameService {
-  currentContent!: string;
+  currentContent: Subject<string> = new Subject<string>();
 
   gameId!: string;
   newGame!: Game;
@@ -146,10 +146,16 @@ export class GameService {
     }
     if (this.playerOneTurn) {
       this.boardArray[this.currentTileCord[0]][this.currentTileCord[1]] = 1;
-      this.currentContent = 'X';
+      this.currentContent.next('X');
+      this.currentContent.subscribe((content) => {
+        console.log(content);
+      });
     } else {
       this.boardArray[this.currentTileCord[0]][this.currentTileCord[1]] = -1;
-      this.currentContent = 'O';
+      this.currentContent.next('O');
+      this.currentContent.subscribe((content) => {
+        console.log(content);
+      });
     }
   }
 
@@ -157,10 +163,6 @@ export class GameService {
     this.apiService.readOne(this.gameId).subscribe((game) => {
       this.boardArray = game?.board || this.boardArray;
     });
-  }
-
-  getCurrentContent() {
-    return this.currentContent;
   }
 
   getCurrentBoard() {
