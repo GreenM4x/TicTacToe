@@ -1,3 +1,4 @@
+<app-winscreen [winningPlayer]="winningPlayer" *ngIf="gameOver"></app-winscreen>
 <div class="board">
   <div class="board-container">
     <div class="row" *ngFor="let row of board; let x = index">

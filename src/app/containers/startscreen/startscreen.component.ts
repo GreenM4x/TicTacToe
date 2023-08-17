@@ -8,13 +8,16 @@ import { GameService } from 'src/app/services/game.service';
   styleUrls: ['./startscreen.component.scss'],
 })
 export class StartscreenComponent {
-  /* gameid: string; */
-
   constructor(private gs: GameService, private router: Router) {}
 
-  create() {
+  createNew() {
     this.gs.startGame().subscribe((id) => {
       this.router.navigate([id]);
     });
+  }
+
+  create() {
+    this.router.navigate(['new']);
+    this.gs.startBotGame();
   }
 }

@@ -1,9 +1,7 @@
 {
   "games": [
     {
-      "id": "y8z0As",
-      "nameP1": "M4x",
-      "nameP2": "X4m",
+      "id": "max",
       "board": [
         [
           0,
@@ -20,49 +18,225 @@
           1,
           -1
         ]
-      ]
+      ],
+      "gameOver": false,
+      "currentPlayerOne": true
     },
     {
       "board": [
         [
+          1,
           0,
+          -1
+        ],
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          -1,
+          -1,
+          -1
+        ]
+      ],
+      "gameOver": true,
+      "id": "RNqZKfS",
+      "currentPlayerOne": false
+    },
+    {
+      "board": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          -1,
+          -1
+        ],
+        [
+          -1,
+          -1,
+          0
+        ]
+      ],
+      "gameOver": true,
+      "id": "pTFbXLL",
+      "currentPlayerOne": true
+    },
+    {
+      "board": [
+        [
+          -1,
           -1,
           1
         ],
         [
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          0
-        ]
-      ],
-      "gameOver": false,
-      "id": "RefbIO0"
-    },
-    {
-      "board": [
-        [
-          0,
-          0,
+          -1,
+          1,
           0
         ],
         [
           1,
           0,
+          0
+        ]
+      ],
+      "gameOver": true,
+      "id": "SlHaVN_"
+    },
+    {
+      "board": [
+        [
+          -1,
+          -1,
+          -1
+        ],
+        [
+          -1,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          0
+        ]
+      ],
+      "gameOver": true,
+      "id": "cNyDAk5",
+      "currentPlayerOne": false
+    },
+    {
+      "board": [
+        [
+          -1,
+          1,
+          -1
+        ],
+        [
+          1,
+          -1,
           1
         ],
         [
+          1,
+          -1,
+          -1
+        ]
+      ],
+      "gameOver": true,
+      "id": "GUmn0j5"
+    },
+    {
+      "board": [
+        [
           0,
           -1,
+          1
+        ],
+        [
+          -1,
+          1,
+          -1
+        ],
+        [
+          1,
+          1,
+          0
+        ]
+      ],
+      "gameOver": true,
+      "id": "3jgBhAi"
+    },
+    {
+      "board": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
           0
         ]
       ],
       "gameOver": false,
-      "id": "3ktFCMy"
+      "id": "DFQMrR5",
+      "currentPlayerOne": false
+    },
+    {
+      "board": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "gameOver": false,
+      "currentPlayerOne": true,
+      "id": "omstwLi"
+    },
+    {
+      "board": [
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          -1,
+          -1,
+          -1
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "gameOver": true,
+      "id": "dJUfrKJ"
+    },
+    {
+      "board": [
+        [
+          -1,
+          -1,
+          1
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          -1,
+          1,
+          0
+        ]
+      ],
+      "gameOver": false,
+      "id": "ao51S3o",
+      "currentPlayerOne": true
     }
   ]
 }

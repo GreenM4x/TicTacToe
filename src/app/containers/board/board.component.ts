@@ -8,6 +8,9 @@ import { GameService } from 'src/app/services/game.service';
   styleUrls: ['./board.component.scss'],
 })
 export class BoardComponent implements OnInit {
+  winningPlayer!: 'X' | 'O';
+  gameOver!: boolean;
+
   public board: number[][] = [
     [0, 0, 0],
     [0, 0, 0],
@@ -17,7 +20,18 @@ export class BoardComponent implements OnInit {
   constructor(private route: ActivatedRoute, private gs: GameService) {}
 
   ngOnInit() {
+    this.gs.gameStatus.subscribe((isGameOver) => {
+      this.gameOver = isGameOver;
+    });
+
+    this.gs.winningPlayer.subscribe((winningPlayer: 'X' | 'O') => {
+      this.winningPlayer = winningPlayer;
+    });
+
     this.gs.setGameID(this.route.snapshot.paramMap.get('id') || '');
-    console.log(this.route.snapshot.paramMap.get('id'));
+
+    if (!this.route.snapshot.paramMap.get('id')) {
+      this.gs.setToBot();
+    }
   }
 }
