@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
 
 @Component({
@@ -6,45 +6,15 @@ import { GameService } from 'src/app/services/game.service';
   templateUrl: './tiles.component.html',
   styleUrls: ['./tiles.component.scss'],
 })
-export class TilesComponent implements OnInit {
+export class TilesComponent {
   @Input() coords!: { x: number; y: number };
-  currentboard!: number[][] | undefined;
-  content: string = '';
+  @Input() content: string = '';
 
-  ngOnInit(): void {
-    this.gs.currentContent.subscribe((content) => {
-      this.content = content;
-    });
+  @Output() onClickTile: EventEmitter<{ x: number; y: number }> =
+    new EventEmitter();
 
-    if (this.gs.isBotGame) return;
-    this.gs.getCurrentBoard().subscribe((board) => {
-      this.currentboard = board;
-      this.checkfortiles();
-      this.gs.checkForWin();
-    });
-  }
-
-  checkfortiles() {
-    if (
-      this.currentboard &&
-      this.currentboard[this.coords.x][this.coords.y] === 1
-    ) {
-      this.content = 'X';
-    } else if (
-      this.currentboard &&
-      this.currentboard[this.coords.x][this.coords.y] === -1
-    ) {
-      this.content = 'O';
-    } else {
-      this.content = '';
-    }
-  }
   setTile() {
-    this.gs.setCurrentTile([this.coords.x, this.coords.y]);
-    this.gs.play();
-
-    if (this.gs.isBotGame) return;
-    this.gs.getCurrentBoard().subscribe((board) => (this.currentboard = board));
+    this.onClickTile.emit(this.coords);
   }
 
   constructor(private gs: GameService) {}

@@ -1,8 +1,13 @@
 <app-winscreen [winningPlayer]="winningPlayer" *ngIf="gameOver"></app-winscreen>
 <div class="board">
   <div class="board-container">
-    <div class="row" *ngFor="let row of board; let x = index">
-      <app-tiles *ngFor="let column of row; let y = index" [coords]="{x, y}">
+    <div class="row" *ngFor="let row of gameBoard; let x = index">
+      <app-tiles
+        *ngFor="let column of row; let y = index"
+        [coords]="{x,y}"
+        [content]="checkForContent(x, y)"
+        (onClickTile)="setTile($event)"
+      >
       </app-tiles>
     </div>
   </div>

@@ -7,7 +7,7 @@ import { ApiServiceService } from './api-service.service';
   providedIn: 'root',
 })
 export class GameService {
-  currentContent: Subject<string> = new Subject<string>();
+  currentContent: string = '';
 
   gameId!: string;
   newGame!: Game;
@@ -116,7 +116,10 @@ export class GameService {
     let RandomY = Math.floor(Math.random() * 3);
 
     console.log(this.boardArray);
-    /* if (!this.chechForSpace(randomX, RandomY)) this.botsMove(); */
+    if (!this.chechForSpace(randomX, RandomY)) {
+      this.botsMove();
+      return;
+    }
     this.setCurrentTile([randomX, RandomY]);
     this.play();
   }
@@ -146,16 +149,10 @@ export class GameService {
     }
     if (this.playerOneTurn) {
       this.boardArray[this.currentTileCord[0]][this.currentTileCord[1]] = 1;
-      this.currentContent.next('X');
-      this.currentContent.subscribe((content) => {
-        console.log(content);
-      });
+      this.currentContent = 'X';
     } else {
       this.boardArray[this.currentTileCord[0]][this.currentTileCord[1]] = -1;
-      this.currentContent.next('O');
-      this.currentContent.subscribe((content) => {
-        console.log(content);
-      });
+      this.currentContent = 'O';
     }
   }
 
@@ -166,6 +163,7 @@ export class GameService {
   }
 
   getCurrentBoard() {
+    console.log(this.gameId);
     return this.apiService
       .readOne(this.gameId)
       .pipe(map((game) => game?.board));

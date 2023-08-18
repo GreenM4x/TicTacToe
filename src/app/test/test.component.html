@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="card" *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
+    <div class="header">
+      <h1>API {{ i }} <mat-icon>info</mat-icon></h1>
+    </div>
+    <div class="tags-container">
+      <div class="tag" *ngFor="let t of ['asg', 'asdfiub', 'Krasse API']">
+        {{ t }}
+      </div>
+    </div>
+    <div class="services">
+      <div class="service-item" *ngFor="let s of ['D', 'T', 'Q', 'P']">
+        {{ s }}
+      </div>
+    </div>
+  </div>
+</div>

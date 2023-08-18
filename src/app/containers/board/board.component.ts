@@ -11,7 +11,7 @@ export class BoardComponent implements OnInit {
   winningPlayer!: 'X' | 'O';
   gameOver!: boolean;
 
-  public board: number[][] = [
+  gameBoard: number[][] | undefined = [
     [0, 0, 0],
     [0, 0, 0],
     [0, 0, 0],
@@ -20,6 +20,13 @@ export class BoardComponent implements OnInit {
   constructor(private route: ActivatedRoute, private gs: GameService) {}
 
   ngOnInit() {
+    this.gs.setGameID(this.route.snapshot.paramMap.get('id') || '');
+
+    this.gs.getCurrentBoard().subscribe((board) => {
+      if (board !== undefined) this.gameBoard = board;
+      this.gs.checkForWin();
+    });
+
     this.gs.gameStatus.subscribe((isGameOver) => {
       this.gameOver = isGameOver;
     });
@@ -28,10 +35,21 @@ export class BoardComponent implements OnInit {
       this.winningPlayer = winningPlayer;
     });
 
-    this.gs.setGameID(this.route.snapshot.paramMap.get('id') || '');
-
     if (!this.route.snapshot.paramMap.get('id')) {
       this.gs.setToBot();
     }
+  }
+
+  setTile(coords: { x: number; y: number }) {
+    this.gs.setCurrentTile([coords.x, coords.y]);
+    this.gs.play();
+    console.log(this.gs.boardArray);
+  }
+
+  checkForContent(x: number, y: number): 'X' | 'O' | '' {
+    if (!this.gameBoard) return '';
+    if (this.gameBoard[x][y] === 1) return 'X';
+    if (this.gameBoard[x][y] === -1) return 'O';
+    return '';
   }
 }

@@ -25,152 +25,88 @@
     {
       "board": [
         [
-          1,
-          0,
-          -1
-        ],
-        [
           0,
           1,
-          1
-        ],
-        [
-          -1,
-          -1,
-          -1
-        ]
-      ],
-      "gameOver": true,
-      "id": "RNqZKfS",
-      "currentPlayerOne": false
-    },
-    {
-      "board": [
-        [
-          1,
-          1,
-          1
-        ],
-        [
-          1,
-          -1,
           -1
         ],
         [
           -1,
-          -1,
-          0
+          1,
+          -1
+        ],
+        [
+          0,
+          0,
+          1
         ]
       ],
-      "gameOver": true,
-      "id": "pTFbXLL",
+      "gameOver": false,
+      "id": "2vMe4oH",
       "currentPlayerOne": true
     },
     {
       "board": [
         [
-          -1,
+          1,
           -1,
           1
         ],
         [
           -1,
           1,
-          0
-        ],
-        [
-          1,
-          0,
-          0
-        ]
-      ],
-      "gameOver": true,
-      "id": "SlHaVN_"
-    },
-    {
-      "board": [
-        [
-          -1,
-          -1,
           -1
         ],
         [
-          -1,
+          0,
           1,
-          0
-        ],
-        [
-          1,
-          1,
-          0
+          -1
         ]
       ],
-      "gameOver": true,
-      "id": "cNyDAk5",
+      "gameOver": false,
+      "id": "oCyssKY",
       "currentPlayerOne": false
     },
     {
       "board": [
         [
-          -1,
-          1,
-          -1
-        ],
-        [
-          1,
-          -1,
-          1
-        ],
-        [
-          1,
-          -1,
-          -1
-        ]
-      ],
-      "gameOver": true,
-      "id": "GUmn0j5"
-    },
-    {
-      "board": [
-        [
           0,
-          -1,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
           1
         ],
         [
           -1,
-          1,
-          -1
-        ],
-        [
-          1,
-          1,
+          -1,
           0
         ]
       ],
       "gameOver": true,
-      "id": "3jgBhAi"
+      "id": "O4TdOTU"
     },
     {
       "board": [
         [
+          1,
           0,
-          0,
-          0
+          1
         ],
         [
           0,
           1,
-          0
+          -1
         ],
         [
-          0,
-          0,
-          0
+          -1,
+          -1,
+          1
         ]
       ],
-      "gameOver": false,
-      "id": "DFQMrR5",
+      "gameOver": true,
+      "id": "MLFA1Vl",
       "currentPlayerOne": false
     },
     {
@@ -193,72 +129,73 @@
       ],
       "gameOver": false,
       "currentPlayerOne": true,
-      "id": "omstwLi"
+      "id": "Ep3b-4f"
     },
     {
       "board": [
         [
           0,
-          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "gameOver": false,
+      "currentPlayerOne": true,
+      "id": "9gTSxy-"
+    },
+    {
+      "board": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "gameOver": false,
+      "currentPlayerOne": true,
+      "id": "roH-SWf"
+    },
+    {
+      "board": [
+        [
+          0,
+          0,
           1
         ],
         [
-          -1,
+          0,
           -1,
           -1
         ],
         [
           0,
-          1,
-          0
-        ]
-      ],
-      "gameOver": true,
-      "id": "dJUfrKJ"
-    },
-    {
-      "board": [
-        [
-          -1,
-          -1,
-          1
-        ],
-        [
-          1,
-          1,
-          0
-        ],
-        [
-          -1,
-          1,
-          0
-        ]
-      ],
-      "gameOver": false,
-      "id": "ao51S3o",
-      "currentPlayerOne": false
-    },
-    {
-      "board": [
-        [
-          -1,
-          0,
-          0
-        ],
-        [
-          0,
-          1,
-          0
-        ],
-        [
-          0,
           0,
           1
         ]
       ],
       "gameOver": false,
-      "id": "OLVIPLv",
-      "currentPlayerOne": false
+      "id": "7J0C9e8",
+      "currentPlayerOne": true
     }
   ]
 }
