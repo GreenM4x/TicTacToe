@@ -21,6 +21,7 @@ export class GameService {
   playerOneTurn!: boolean;
 
   currentGame: Game = {
+    id: '',
     board: this.boardArray,
     gameOver: false,
     currentPlayerOne: this.playerOneTurn,
@@ -38,6 +39,7 @@ export class GameService {
     this.boardArray = new Array(3).fill(0).map(() => new Array(3).fill(0));
 
     this.newGame = {
+      id: '',
       board: this.boardArray,
       gameOver: false,
       currentPlayerOne: true,
@@ -54,6 +56,7 @@ export class GameService {
     this.boardArray = new Array(3).fill(0).map(() => new Array(3).fill(0));
 
     this.newGame = {
+      id: 'bot',
       board: this.boardArray,
       gameOver: false,
       currentPlayerOne: true,
@@ -84,6 +87,8 @@ export class GameService {
       let isGameOver: boolean = false;
       this.gameStatus.subscribe((status) => (isGameOver = status));
       this.checkForWin();
+
+      console.log(this.currentContent);
 
       if (!isGameOver) {
         this.updateGame(false);
@@ -162,11 +167,16 @@ export class GameService {
     });
   }
 
+  getCurrentContent() {
+    return this.currentContent;
+  }
   getCurrentBoard() {
-    console.log(this.gameId);
     return this.apiService
       .readOne(this.gameId)
       .pipe(map((game) => game?.board));
+  }
+  getLocalBoard() {
+    return this.boardArray;
   }
   getCurrentPlayer() {
     return this.apiService

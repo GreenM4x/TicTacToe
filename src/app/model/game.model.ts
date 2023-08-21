@@ -1,5 +1,5 @@
 export interface Game {
-  id?: string;
+  id: string;
   board: number[][];
   gameOver: boolean;
   currentPlayerOne: boolean;

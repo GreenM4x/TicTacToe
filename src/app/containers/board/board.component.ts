@@ -11,7 +11,7 @@ export class BoardComponent implements OnInit {
   winningPlayer!: 'X' | 'O';
   gameOver!: boolean;
 
-  gameBoard: number[][] | undefined = [
+  gameBoard: number[][] = [
     [0, 0, 0],
     [0, 0, 0],
     [0, 0, 0],
@@ -24,6 +24,7 @@ export class BoardComponent implements OnInit {
 
     this.gs.getCurrentBoard().subscribe((board) => {
       if (board !== undefined) this.gameBoard = board;
+      console.log(board);
       this.gs.checkForWin();
     });
 
@@ -43,7 +44,8 @@ export class BoardComponent implements OnInit {
   setTile(coords: { x: number; y: number }) {
     this.gs.setCurrentTile([coords.x, coords.y]);
     this.gs.play();
-    console.log(this.gs.boardArray);
+    this.gameBoard = this.gs.getLocalBoard();
+    this.checkForContent(coords.x, coords.y);
   }
 
   checkForContent(x: number, y: number): 'X' | 'O' | '' {
