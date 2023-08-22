@@ -3,9 +3,43 @@
     {
       "id": "dummy",
       "board": [
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0]
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "gameOver": false,
+      "currentPlayerOne": true
+    },
+    {
+      "id": "o_BbYO-",
+      "board": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
       ],
       "gameOver": false,
       "currentPlayerOne": true

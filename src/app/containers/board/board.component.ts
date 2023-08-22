@@ -8,7 +8,7 @@ import { GameService } from 'src/app/services/game.service';
   styleUrls: ['./board.component.scss'],
 })
 export class BoardComponent implements OnInit {
-  winningPlayer!: 'X' | 'O';
+  winningPlayer!: 'X' | 'O' | 'Draw';
   gameOver!: boolean;
 
   gameBoard: number[][] = [
@@ -24,7 +24,6 @@ export class BoardComponent implements OnInit {
 
     this.gs.getCurrentBoard().subscribe((board) => {
       if (board !== undefined) this.gameBoard = board;
-      console.log(board);
       this.gs.checkForWin();
     });
 
@@ -32,7 +31,7 @@ export class BoardComponent implements OnInit {
       this.gameOver = isGameOver;
     });
 
-    this.gs.winningPlayer.subscribe((winningPlayer: 'X' | 'O') => {
+    this.gs.winningPlayer.subscribe((winningPlayer: 'X' | 'O' | 'Draw') => {
       this.winningPlayer = winningPlayer;
     });
 

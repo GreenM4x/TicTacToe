@@ -8,6 +8,7 @@ import { ApiServiceService } from './api-service.service';
 })
 export class GameService {
   currentContent: string = '';
+  currentTurn: number = 0;
 
   gameId!: string;
   newGame!: Game;
@@ -27,7 +28,7 @@ export class GameService {
     currentPlayerOne: this.playerOneTurn,
   };
 
-  winningPlayer: Subject<'X' | 'O'> = new Subject();
+  winningPlayer: Subject<'X' | 'O' | 'Draw'> = new Subject();
   gameStatus: Subject<boolean> = new Subject();
 
   constructor(private apiService: ApiServiceService) {}
@@ -70,6 +71,7 @@ export class GameService {
   }
 
   play() {
+    this.currentTurn++;
     if (this.isBotGame) {
       this.PlayBot();
       return;
@@ -84,11 +86,7 @@ export class GameService {
       this.updateBoard();
       this.playerOneTurn = !this.playerOneTurn;
 
-      let isGameOver: boolean = false;
-      this.gameStatus.subscribe((status) => (isGameOver = status));
-      this.checkForWin();
-
-      console.log(this.currentContent);
+      let isGameOver: boolean = this.checkForWin();
 
       if (!isGameOver) {
         this.updateGame(false);
@@ -96,31 +94,26 @@ export class GameService {
     });
   }
 
-  PlayBot() {
+  private PlayBot() {
     this.updateBoard();
     this.playerOneTurn = !this.playerOneTurn;
 
-    let isGameOver: boolean = false;
-    this.gameStatus.subscribe((status) => (isGameOver = status));
     this.checkForWin();
 
-    if (!isGameOver) {
-      this.updateGame(false);
-    }
+    let isGameOver: boolean = this.checkForWin();
 
-    if (this.isBotTurn) {
+    if (this.isBotTurn && !isGameOver) {
       this.botsMove();
     }
 
     this.isBotTurn = true;
   }
 
-  botsMove() {
+  private botsMove() {
     this.isBotTurn = false;
     let randomX = Math.floor(Math.random() * 3);
     let RandomY = Math.floor(Math.random() * 3);
 
-    console.log(this.boardArray);
     if (!this.chechForSpace(randomX, RandomY)) {
       this.botsMove();
       return;
@@ -129,9 +122,8 @@ export class GameService {
     this.play();
   }
 
-  chechForSpace(x: number, y: number): boolean {
+  private chechForSpace(x: number, y: number): boolean {
     if (this.boardArray[x][y]) {
-      console.log('No space at: ' + x + ' ' + y);
       return false;
     }
     return true;
@@ -144,7 +136,6 @@ export class GameService {
       currentPlayerOne: this.playerOneTurn,
     };
 
-    if (this.isBotGame) return;
     this.apiService.update(this.currentGame).subscribe();
   }
 
@@ -167,9 +158,82 @@ export class GameService {
     });
   }
 
+  checkForWin(): boolean {
+    this.readCurrentBoard();
+
+    //Check for Row or Column Win
+    for (let x = 0; x < 3; x++) {
+      let colsum = 0;
+      let rowsum = 0;
+      for (let y = 0; y < 3; y++) {
+        colsum += this.boardArray[y][x];
+        rowsum += this.boardArray[x][y];
+      }
+      if (colsum === 3 || rowsum === 3) {
+        this.endGame('X');
+        return true;
+      } else if (colsum === -3 || rowsum === -3) {
+        this.endGame('O');
+        return true;
+      }
+    }
+
+    /* Check For Diagonal Wins */
+    if (
+      this.boardArray[0][0] + this.boardArray[1][1] + this.boardArray[2][2] ===
+      3
+    ) {
+      this.endGame('X');
+      return true;
+    } else if (
+      this.boardArray[0][0] + this.boardArray[1][1] + this.boardArray[2][2] ===
+      -3
+    ) {
+      this.endGame('O');
+      return true;
+    }
+
+    if (
+      this.boardArray[2][0] + this.boardArray[1][1] + this.boardArray[0][2] ===
+      3
+    ) {
+      this.endGame('X');
+      return true;
+    } else if (
+      this.boardArray[2][0] + this.boardArray[1][1] + this.boardArray[0][2] ===
+      -3
+    ) {
+      this.endGame('O');
+      return true;
+    }
+    //check for Draw
+    if (this.currentTurn === 9) {
+      this.endGame('Draw');
+      return true;
+    }
+    return false;
+  }
+
+  private endGame(winner: 'X' | 'O' | 'Draw') {
+    if (winner === 'X') {
+      this.gameStatus.next(true);
+      this.winningPlayer.next('X');
+    } else if (winner === 'O') {
+      this.gameStatus.next(true);
+      this.winningPlayer.next('O');
+    } else if (winner === 'Draw') {
+      this.gameStatus.next(true);
+      this.winningPlayer.next('Draw');
+    }
+
+    if (this.isBotGame) return;
+    this.updateGame(true);
+  }
+
   getCurrentContent() {
     return this.currentContent;
   }
+
   getCurrentBoard() {
     return this.apiService
       .readOne(this.gameId)
@@ -190,60 +254,5 @@ export class GameService {
 
   setCurrentTile(cTileCord: number[]) {
     this.currentTileCord = cTileCord;
-  }
-
-  checkForWin() {
-    this.readCurrentBoard();
-    //Check for Row or Column Win
-    for (let x = 0; x < 3; x++) {
-      let colsum = 0;
-      let rowsum = 0;
-      for (let y = 0; y < 3; y++) {
-        colsum += this.boardArray[y][x];
-        rowsum += this.boardArray[x][y];
-      }
-      if (colsum === 3 || rowsum === 3) {
-        this.endGame('X');
-      } else if (colsum === -3 || rowsum === -3) {
-        this.endGame('O');
-      }
-    }
-
-    /* Check For Diagonal Wins */
-    if (
-      this.boardArray[0][0] + this.boardArray[1][1] + this.boardArray[2][2] ===
-      3
-    ) {
-      this.endGame('X');
-    } else if (
-      this.boardArray[0][0] + this.boardArray[1][1] + this.boardArray[2][2] ===
-      -3
-    ) {
-      this.endGame('O');
-    }
-
-    if (
-      this.boardArray[2][0] + this.boardArray[1][1] + this.boardArray[0][2] ===
-      3
-    ) {
-      this.endGame('X');
-    } else if (
-      this.boardArray[2][0] + this.boardArray[1][1] + this.boardArray[0][2] ===
-      -3
-    ) {
-      this.endGame('O');
-    }
-  }
-
-  private endGame(winner: 'X' | 'O') {
-    this.updateGame(true);
-
-    if (winner === 'X') {
-      this.gameStatus.next(true);
-      this.winningPlayer.next('X');
-    } else if (winner === 'O') {
-      this.gameStatus.next(true);
-      this.winningPlayer.next('O');
-    }
   }
 }
