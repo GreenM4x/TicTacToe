@@ -71,7 +71,6 @@ export class GameService {
   }
 
   play() {
-    this.currentTurn++;
     if (this.isBotGame) {
       this.PlayBot();
       return;
@@ -206,8 +205,21 @@ export class GameService {
       this.endGame('O');
       return true;
     }
-    //check for Draw
-    if (this.currentTurn === 9) {
+
+    return this.checkForDraw(this.boardArray);
+  }
+
+  private checkForDraw(board: number[][]): boolean {
+    let count = 0;
+    for (const row of board) {
+      for (const num of row) {
+        if (num !== 0) {
+          count++;
+        }
+      }
+    }
+
+    if (count === 9) {
       this.endGame('Draw');
       return true;
     }
